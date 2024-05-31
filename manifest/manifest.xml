@@ -1166,5 +1166,9 @@
         <members>Case.ChangePriorityToHigh</members>
         <name>WorkflowFieldUpdate</name>
     </types>
+    <types>
+        <members>*</members>
+        <name>LightningMessageChannel</name>
+    </types>
     <version>59.0</version>
 </Package>

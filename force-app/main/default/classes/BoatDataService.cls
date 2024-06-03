@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Jakala
  * @group             : 
- * @last modified on  : 05-31-2024
+ * @last modified on  : 06-03-2024
  * @last modified by  : Jakala
 **/
 public with sharing class BoatDataService {
@@ -22,9 +22,9 @@ public with sharing class BoatDataService {
         if (String.isNotBlank(boatTypeId)) {
             query += ' WHERE BoatType__c = :boatTypeId';
         }
-        query += ' WITH SECURITY_ENFORCED ';
         return Database.query(query);
     }
+
     @AuraEnabled(cacheable=true)
     public static List<Boat__c> getSimilarBoats(Id boatId, String similarBy) {
         List<Boat__c> similarBoats = new List<Boat__c>();
@@ -67,10 +67,12 @@ public with sharing class BoatDataService {
         }
         return similarBoats;
     }
+
     @AuraEnabled(cacheable=true)
     public static List<BoatType__c> getBoatTypes() {
         return [SELECT Name, Id FROM BoatType__c WITH SECURITY_ENFORCED ORDER BY Name];
     }
+
     @AuraEnabled
     public static List<BoatReview__c> getAllReviews(Id boatId) {
         return [
@@ -105,6 +107,7 @@ public with sharing class BoatDataService {
         query += ' WITH SECURITY_ENFORCED ORDER BY DISTANCE(Geolocation__c, GEOLOCATION(:latitude, :longitude), \'mi\') LIMIT 10';
         return JSON.serialize(Database.query(query));
     }
+
     @AuraEnabled
     public static String updateBoatList(Object data){
         List<Boat__c> boatsForUpdate = (List<Boat__c>) JSON.deserialize(
